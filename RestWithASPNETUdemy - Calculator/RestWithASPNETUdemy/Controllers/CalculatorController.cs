@@ -12,8 +12,8 @@ namespace RestWithASPNETUdemy.Controllers
     {
 
 
-        // GET api/values/5/5
-        [HttpGet("{firstnumber}/{secondnumber}")]
+        // GET api/Calculator/sum/5/5
+        [HttpGet("sum/{firstnumber}/{secondnumber}")]
         public IActionResult Sum(string firstnumber, string secondnumber)
         {
             try
