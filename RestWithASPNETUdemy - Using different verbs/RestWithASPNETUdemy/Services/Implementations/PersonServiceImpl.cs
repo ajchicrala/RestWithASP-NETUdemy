@@ -3,61 +3,94 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using RestWithASPNETUdemy.Model;
+using RestWithASPNETUdemy.Model.Context;
 
 namespace RestWithASPNETUdemy.Services.Implementations
 {
     public class PersonServiceImpl : IPersonInterface
     {
+
+        private MySqlContext _context;
+
+        public PersonServiceImpl(MySqlContext context)
+        {
+            _context = context;
+        }
+
         public Person Create(Person person)
         {
+            try
+            {
+                _context.Add(person);
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
             return person;
         }
 
         public void Delete(long id)
         {
+
+            try
+            {
+                var result = _context.Persons.Where(c => c.Id == id).FirstOrDefault();
+                if (result != null)
+                {
+                    _context.Remove(result);
+                    _context.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
         }
 
         public List<Person> FindAll()
         {
-            List<Person> persons = new List<Person>();
-            for (int i = 0; i < 8; i++)
-            {
-                Person person = MockPerson(i);
-                persons.Add(person);
-            }
-            return persons;
+            return _context.Persons.Where(c => c.Id > 0).ToList();
         }
 
         public Person FindById(long id)
         {
-            return new Person
-            {
-                Id = 1,
-                FirstName = "Leandro",
-                LastName = "Costa",
-                Address = "Uberlândia - MG",
-                Gender = "Male"
-            };
-            
+            return _context.Persons.Where(c => c.Id == id).FirstOrDefault();
+
         }
 
         public Person Update(Person person)
         {
-            return person;
-        }
-
-
-        private Person MockPerson(int i)
-        {
-            return new Person
+            if (!Exists(person.Id))
             {
-                Id = i,
-                FirstName = "Geraldo",
-                LastName = "Magela",
-                Address = "Uberlândia - MG",
-                Gender = "Male"
-            };
+                return new Person();
+            }
+
+            var result = _context.Persons.Where(c => c.Id == person.Id).First();
+            try
+            {
+                _context.Entry(result).CurrentValues.SetValues(person);
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+            return person;
+
         }
+
+        private bool Exists(int id)
+        {
+            return _context.Persons.Where(c => c.Id == id).Any();
+        }
+
+
 
     }
 
