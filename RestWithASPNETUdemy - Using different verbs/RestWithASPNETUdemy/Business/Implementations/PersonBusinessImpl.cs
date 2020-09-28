@@ -5,14 +5,14 @@ using System.Threading.Tasks;
 using RestWithASPNETUdemy.Model;
 using RestWithASPNETUdemy.Model.Context;
 
-namespace RestWithASPNETUdemy.Services.Implementations
+namespace RestWithASPNETUdemy.Business.Implementations
 {
-    public class PersonServiceImpl : IPersonInterface
+    public class PersonBusinessImpl : IPersonBusiness
     {
 
         private MySqlContext _context;
 
-        public PersonServiceImpl(MySqlContext context)
+        public PersonBusinessImpl(MySqlContext context)
         {
             _context = context;
         }
