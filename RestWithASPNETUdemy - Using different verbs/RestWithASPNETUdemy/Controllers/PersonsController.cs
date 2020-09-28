@@ -8,8 +8,9 @@ using RestWithASPNETUdemy.Services;
 
 namespace RestWithASPNETUdemy.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
+
+    [ApiVersion("1")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     public class PersonsController : ControllerBase
     {
 
