@@ -14,6 +14,8 @@ using Microsoft.Extensions.Options;
 using RestWithASPNETUdemy.Model.Context;
 using RestWithASPNETUdemy.Business;
 using RestWithASPNETUdemy.Business.Implementations;
+using RestWithASPNETUdemy.Repository;
+using RestWithASPNETUdemy.Repository.Implementations;
 
 namespace RestWithASPNETUdemy
 {
@@ -38,6 +40,7 @@ namespace RestWithASPNETUdemy
 
             //Injeção de dependência
             services.AddScoped<IPersonBusiness, PersonBusinessImpl>();
+            services.AddScoped<IPersonRepository, PersonRepositoryImpl>();
 
         }
 

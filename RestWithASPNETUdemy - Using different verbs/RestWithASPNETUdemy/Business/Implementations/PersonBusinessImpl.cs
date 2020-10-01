@@ -4,91 +4,51 @@ using System.Linq;
 using System.Threading.Tasks;
 using RestWithASPNETUdemy.Model;
 using RestWithASPNETUdemy.Model.Context;
+using RestWithASPNETUdemy.Repository;
 
 namespace RestWithASPNETUdemy.Business.Implementations
 {
     public class PersonBusinessImpl : IPersonBusiness
     {
 
-        private MySqlContext _context;
+        private IPersonRepository _repository;
 
-        public PersonBusinessImpl(MySqlContext context)
+        public PersonBusinessImpl(IPersonRepository repository)
         {
-            _context = context;
+            _repository = repository;
         }
 
         public Person Create(Person person)
         {
-            try
-            {
-                _context.Add(person);
-                _context.SaveChanges();
-            }
-            catch (Exception ex)
-            {
 
-                throw ex;
-            }
-            return person;
+            return _repository.Create(person);
         }
 
         public void Delete(long id)
         {
 
-            try
-            {
-                var result = _context.Persons.Where(c => c.Id == id).FirstOrDefault();
-                if (result != null)
-                {
-                    _context.Remove(result);
-                    _context.SaveChanges();
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            _repository.Delete(id);
 
         }
 
         public List<Person> FindAll()
         {
-            return _context.Persons.Where(c => c.Id > 0).ToList();
+            return _repository.FindAll();
         }
 
         public Person FindById(long id)
         {
-            return _context.Persons.Where(c => c.Id == id).FirstOrDefault();
+            return _repository.FindById(id);
 
         }
 
         public Person Update(Person person)
         {
-            if (!Exists(person.Id))
-            {
-                return new Person();
-            }
 
-            var result = _context.Persons.Where(c => c.Id == person.Id).First();
-            try
-            {
-                _context.Entry(result).CurrentValues.SetValues(person);
-                _context.SaveChanges();
-            }
-            catch (Exception ex)
-            {
-
-                throw ex;
-            }
-
-            return person;
+            return _repository.Update(person);
 
         }
 
-        private bool Exists(int id)
-        {
-            return _context.Persons.Where(c => c.Id == id).Any();
-        }
 
 
 
