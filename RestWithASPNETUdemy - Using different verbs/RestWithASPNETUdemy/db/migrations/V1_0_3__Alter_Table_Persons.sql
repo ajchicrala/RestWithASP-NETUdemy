@@ -1,0 +1,1 @@
+﻿ALTER TABLE persons CHANGE ID ID INT(15);
