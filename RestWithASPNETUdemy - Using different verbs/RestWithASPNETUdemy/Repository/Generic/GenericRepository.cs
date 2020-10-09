@@ -22,32 +22,68 @@ namespace RestWithASPNETUdemy.Repository.Generic
 
         public T Create(T item)
         {
-            throw new NotImplementedException();
+            try
+            {
+                dataset.Add(item);
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            return item;
         }
 
         public void Delete(long id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var result = dataset.SingleOrDefault(i => i.Id.Equals(id));
+                if (result != null)
+                {
+                    dataset.Remove(result);
+                    _context.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public bool Exists(long? id)
         {
-            throw new NotImplementedException();
+            return dataset.Any(c => c.Id.Equals(id));
         }
 
         public List<T> FindAll()
         {
-            throw new NotImplementedException();
+            return dataset.ToList();
         }
 
         public T FindById(long id)
         {
-            throw new NotImplementedException();
+            return dataset.SingleOrDefault(c => c.Id == id);
         }
 
         public T Update(T item)
         {
-            throw new NotImplementedException();
+            if (!Exists(item.Id)) return null;
+
+            var result = dataset.SingleOrDefault(c => c.Id == item.Id);
+            try
+            {
+                _context.Entry(result).CurrentValues.SetValues(item);
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+            return item;
         }
     }
 }
