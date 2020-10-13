@@ -16,6 +16,7 @@ using RestWithASPNETUdemy.Business;
 using RestWithASPNETUdemy.Business.Implementations;
 using RestWithASPNETUdemy.Repository;
 using RestWithASPNETUdemy.Repository.Implementations;
+using RestWithASPNETUdemy.Repository.Generic;
 
 namespace RestWithASPNETUdemy
 {
@@ -67,6 +68,9 @@ namespace RestWithASPNETUdemy
             //Injeção de dependência
             services.AddScoped<IPersonBusiness, PersonBusinessImpl>();
             services.AddScoped<IPersonRepository, PersonRepositoryImpl>();
+
+            //Injeção de dependência do GenericService
+            services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
 
         }
 

@@ -4,43 +4,73 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using RestWithASPNETUdemy.Model;
 
 namespace RestWithASPNETUdemy.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
+    [ApiVersion("1")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     public class BooksController : ControllerBase
     {
-        // GET: api/Books
+
+        //private IBooksBusiness _booksbusiness;
+
+        //public BooksController(IPersonBusiness personbusiness)
+        //{
+        //    _booksbusiness = personbusiness;
+        //}
+
+        // GET api/values
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IActionResult Get()
         {
-            return new string[] { "value1", "value2" };
+            //return Ok(_booksbusiness.FindAll());
+            return Ok();
         }
 
-        // GET: api/Books/5
-        [HttpGet("{id}", Name = "Get")]
-        public string Get(int id)
+        // GET api/values/5
+        [HttpGet("{id}")]
+        public IActionResult Get(long id)
         {
-            return "value";
+            //var books = _booksbusiness.FindById(id);
+            //if (books == null)
+            //{
+            //    return NotFound();
+            //}
+            //else
+            //{
+            //    return Ok(books);
+            //}
+            return Ok();
+
         }
 
-        // POST: api/Books
+        // POST api/values
         [HttpPost]
-        public void Post([FromBody] string value)
+        public IActionResult Post([FromBody] Books book)
         {
+            //if (book == null) BadRequest();
+            //return new ObjectResult(_booksbusiness.Create(book));
+            return Ok();
         }
 
-        // PUT: api/Books/5
+        // PUT api/values/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public IActionResult Put([FromBody] Books book)
         {
+            //if (book == null) return BadRequest();
+            //return new ObjectResult(_booksbusiness.Update(book));
+            return Ok();
         }
 
-        // DELETE: api/ApiWithActions/5
+        // DELETE api/values/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(long id)
         {
+            //_booksbusiness.Delete(id);
+            //return NoContent();
+            return Ok();
         }
+
     }
 }
