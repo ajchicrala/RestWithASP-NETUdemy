@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RestWithASPNETUdemy.Model.Base
 {
-    [DataContract]
+    //[DataContract]
     public class BaseEntity
     {
         public long Id { get; set; }

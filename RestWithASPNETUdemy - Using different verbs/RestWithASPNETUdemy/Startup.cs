@@ -67,6 +67,7 @@ namespace RestWithASPNETUdemy
 
             //Injeção de dependência
             services.AddScoped<IPersonBusiness, PersonBusinessImpl>();
+            services.AddScoped<IBooksBusiness, BooksBusinessImpl>();
             services.AddScoped<IPersonRepository, PersonRepositoryImpl>();
 
             //Injeção de dependência do GenericService
