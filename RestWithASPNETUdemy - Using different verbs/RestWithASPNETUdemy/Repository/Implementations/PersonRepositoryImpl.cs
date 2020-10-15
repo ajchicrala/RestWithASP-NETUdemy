@@ -7,7 +7,7 @@ using RestWithASPNETUdemy.Model.Context;
 
 namespace RestWithASPNETUdemy.Repository.Implementations
 {
-    public class PersonRepositoryImpl : IPersonRepository
+    public class PersonRepositoryImpl : IRepository
     {
 
         private MySqlContext _context;

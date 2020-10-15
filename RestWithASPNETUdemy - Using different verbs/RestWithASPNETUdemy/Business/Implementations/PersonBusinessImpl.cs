@@ -5,15 +5,16 @@ using System.Threading.Tasks;
 using RestWithASPNETUdemy.Model;
 using RestWithASPNETUdemy.Model.Context;
 using RestWithASPNETUdemy.Repository;
+using RestWithASPNETUdemy.Repository.Generic;
 
 namespace RestWithASPNETUdemy.Business.Implementations
 {
     public class PersonBusinessImpl : IPersonBusiness
     {
 
-        private IPersonRepository _repository;
+        private IRepository<Person> _repository;
 
-        public PersonBusinessImpl(IPersonRepository repository)
+        public PersonBusinessImpl(IRepository<Person> repository)
         {
             _repository = repository;
         }
