@@ -10,6 +10,7 @@ namespace RestWithASPNETUdemy.Data.Converters
 {
     public class PersonConverter : IParser<PersonVO, Person>, IParser<Person, PersonVO>
     {
+
         public Person Parse(PersonVO origin)
         {
             if (origin == null) return new Person();

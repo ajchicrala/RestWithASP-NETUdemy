@@ -10,7 +10,7 @@ namespace RestWithASPNETUdemy.Business.Implementations
     {
 
         private IRepository<Person> _repository;
-        private readonly PersonConverter _converter;
+        private PersonConverter _converter = new PersonConverter();
 
         public PersonBusinessImpl(IRepository<Person> repository)
         {
@@ -26,9 +26,7 @@ namespace RestWithASPNETUdemy.Business.Implementations
 
         public void Delete(long id)
         {
-
             _repository.Delete(id);
-
         }
 
         public List<PersonVO> FindAll()
@@ -39,16 +37,13 @@ namespace RestWithASPNETUdemy.Business.Implementations
         public PersonVO FindById(long id)
         {
             return _converter.Parse(_repository.FindById(id));
-
         }
 
         public PersonVO Update(PersonVO person)
         {
-
             var personEntity = _converter.Parse(person);
             personEntity = _repository.Update(personEntity);
             return _converter.Parse(personEntity);
-
         }
 
 
