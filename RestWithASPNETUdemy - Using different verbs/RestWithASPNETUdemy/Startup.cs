@@ -17,6 +17,8 @@ using RestWithASPNETUdemy.Business.Implementations;
 using RestWithASPNETUdemy.Repository;
 using RestWithASPNETUdemy.Repository.Implementations;
 using RestWithASPNETUdemy.Repository.Generic;
+using Tapioca.HATEOAS;
+using RestWithASPNETUdemy.Hypermedia;
 
 namespace RestWithASPNETUdemy
 {
@@ -61,6 +63,11 @@ namespace RestWithASPNETUdemy
                 }
             }
 
+
+            var filteroptions = new HyperMediaFilterOptions();
+            filteroptions.ObjectContentResponseEnricherList.Add(new PersonEnricher());
+            services.AddSingleton(filteroptions);
+
             services.AddApiVersioning();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
@@ -89,7 +96,12 @@ namespace RestWithASPNETUdemy
             }
 
             app.UseHttpsRedirection();
-            app.UseMvc();
+            app.UseMvc(routes => {
+                routes.MapRoute(
+                    name: "DefaultApi",
+                    template: "{controller=Values}/{id?}"
+                    );
+            });
         }
     }
 }

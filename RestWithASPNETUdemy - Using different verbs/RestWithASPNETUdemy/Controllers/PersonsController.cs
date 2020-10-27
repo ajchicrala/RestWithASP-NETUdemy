@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using RestWithASPNETUdemy.Model;
 using RestWithASPNETUdemy.Business;
 using RestWithASPNETUdemy.Data.VO;
+using Tapioca.HATEOAS;
 
 namespace RestWithASPNETUdemy.Controllers
 {
@@ -24,6 +25,7 @@ namespace RestWithASPNETUdemy.Controllers
 
         // GET api/values
         [HttpGet]
+        [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Get()
         {
             return Ok(_personbusiness.FindAll());
@@ -31,6 +33,7 @@ namespace RestWithASPNETUdemy.Controllers
 
         // GET api/values/5
         [HttpGet("{id}")]
+        [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Get(long id)
         {
             var person = _personbusiness.FindById(id);
@@ -47,6 +50,7 @@ namespace RestWithASPNETUdemy.Controllers
 
         // POST api/values
         [HttpPost]
+        [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Post([FromBody] PersonVO person)
         {
             if (person == null) BadRequest();
@@ -55,6 +59,7 @@ namespace RestWithASPNETUdemy.Controllers
 
         // PUT api/values/5
         [HttpPut("{id}")]
+        [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Put([FromBody] PersonVO person)
         {
             if (person == null) return BadRequest();
@@ -63,6 +68,7 @@ namespace RestWithASPNETUdemy.Controllers
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
+        [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Delete(long id)
         {
             _personbusiness.Delete(id);
