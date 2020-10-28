@@ -7,6 +7,7 @@ using RestWithASPNETUdemy.Model;
 using RestWithASPNETUdemy.Business;
 using RestWithASPNETUdemy.Data.VO;
 using Tapioca.HATEOAS;
+using Microsoft.AspNetCore.Http;
 
 namespace RestWithASPNETUdemy.Controllers
 {
@@ -25,6 +26,7 @@ namespace RestWithASPNETUdemy.Controllers
 
         // GET api/values
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Get()
         {
@@ -33,6 +35,7 @@ namespace RestWithASPNETUdemy.Controllers
 
         // GET api/values/5
         [HttpGet("{id}")]
+        [ProducesResponseType(200, StatusCode = StatusCodes.Status200OK, Type = typeof(PersonVO))]
         [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Get(long id)
         {
@@ -50,6 +53,8 @@ namespace RestWithASPNETUdemy.Controllers
 
         // POST api/values
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Post([FromBody] PersonVO person)
         {
@@ -59,6 +64,7 @@ namespace RestWithASPNETUdemy.Controllers
 
         // PUT api/values/5
         [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
         [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Put([FromBody] PersonVO person)
         {
@@ -68,6 +74,7 @@ namespace RestWithASPNETUdemy.Controllers
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Delete(long id)
         {

@@ -19,13 +19,15 @@ using RestWithASPNETUdemy.Repository.Implementations;
 using RestWithASPNETUdemy.Repository.Generic;
 using Tapioca.HATEOAS;
 using RestWithASPNETUdemy.Hypermedia;
+using Swashbuckle.AspNetCore.Swagger;
+using Microsoft.AspNetCore.Rewrite;
 
 namespace RestWithASPNETUdemy
 {
     public class Startup
     {
 
-        private readonly ILogger _logger;  
+        private readonly ILogger _logger;
         public IConfiguration _configuration { get; }
         public IHostingEnvironment _environment { get; }
 
@@ -67,10 +69,9 @@ namespace RestWithASPNETUdemy
             var filteroptions = new HyperMediaFilterOptions();
             filteroptions.ObjectContentResponseEnricherList.Add(new PersonEnricher());
             services.AddSingleton(filteroptions);
-
             services.AddApiVersioning();
-
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddSwaggerGen();
 
             //Injeção de dependência
             services.AddScoped<IPersonBusiness, PersonBusinessImpl>();
@@ -96,12 +97,23 @@ namespace RestWithASPNETUdemy
             }
 
             app.UseHttpsRedirection();
-            app.UseMvc(routes => {
+            app.UseMvc(routes =>
+            {
                 routes.MapRoute(
                     name: "DefaultApi",
                     template: "{controller=Values}/{id?}"
                     );
             });
+
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c => {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Minha API V1");
+            });
+
+            var option = new RewriteOptions();
+            option.AddRedirect("^$", "swagger");
+            app.UseRewriter(option);
         }
     }
 }
